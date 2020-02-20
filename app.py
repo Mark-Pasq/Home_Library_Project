@@ -25,25 +25,31 @@ def menu():
         else:
             print('unknown command or input!  Try your selection')
 
-        user_input - input(USER_CHOICE)
+        user_input = input(USER_CHOICE)
+
 
 def prompt_add_book():
-    name = input('Enter the name of your book to add.')
-    author = 'Enter the name of the author of your book.')
+    name = input(f'''Enter the name of your book to add: ''')
+    author = f'''Enter the name of the author of your book:  '''
 
     database.add_book_to_the_list(name, author)
 
-def list_all_books()
+
+def list_all_books():
         books = database.get_all_books()
-        for books in books:
+        for book in books:
             read = 'YES' if book['read'] == '1' else 'None'
-            print(f'''{book['name']} by {book['author']}, read: {book['read]}''')
+            print(f'''{book['name']} by {book['author']}, read: {book['read']}''')
+
 
 def prompt_mark_book_as_read():
-        name = input(f'Enter the name of the book from your library that you have read it!.''')
+        name = input(f'''Enter the name of the book from your library that you have read it!:  ''')
+
+        database.prompt_mark_book_as_read(name)
+
 
 def prompt_to_delete_a_book():
-    name = input(f'Enter the title of a book that you would like to delete from your library list.')
+    name = input(f'''Enter the title of a book that you would like to delete from your library list:  ''')
 
     database.delete_book(name)
 
