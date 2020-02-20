@@ -1,40 +1,49 @@
-
 """
-Concerned with storing and retrieving books from from a csv file.
+Concerned with storing and retrieving books from from a JSON file.
+
+[
+    {
+        'name': 'Clean Code''
+        'author': 'Robert',
+        'read': TRUE
+    }
+]
 """
-import app
-books_file = 'books.txt'
+import json
+
+books_file = 'books.json'
 
 
-def add_book_to_the_list(name, author):
-    with open('books.txt', 'a') as my_file:
-        my_file.write(f'''{name}, {author},0''')
+def create_book_table():
+    with open(books_file, 'w') as file:
+        json.dump([], file)
 
 
-def get_all_books():
-    with open(books_file,'r') as your_file:
-        lines = [line.strip().split(',') for line in your_file.readlines()]
-
-        return [{'name' : line[0], 'author': line[1], 'read': line[2]}
-                for line in lines
-        ]
+def prompt_add_book_to_the_list(name, author):
+    books = list_all_books()
+    books.append({'name': name, 'author': author, 'read': False})
+    _save_all_books(books)
 
 
-def prompt_mark_book_as_read(name):
-    books = get_all_books()
-    for book in books:
-        if book['name'] == name:
-            book['read'] = '1'
-        _save_all_books(books)
+def list_all_books():
+    with open(books_file, 'r') as file:
+        return json.load(file)
 
 
 def _save_all_books(books):
-    with open(books_file, 'w') as her_file:
-        for book in books:
-            her_file.write(f'''{book['name']}, {book['author']}, {book['read']}''')
+    with open(books_file, 'w') as file:
+        json.dump(books, file)
 
 
-def delete_book(name):
-    books = get_all_books()
+def prompt_mark_book_as_read(name):
+    books = list_all_books()
+    for book in books:
+        if book['name'] == name:
+            book['read'] = True
+        _save_all_books(books)
+
+
+def prompt_to_delete_a_book(name):
+    books = list_all_books()
     books = [book for book in books if book['name'] != name]
     _save_all_books(books)
