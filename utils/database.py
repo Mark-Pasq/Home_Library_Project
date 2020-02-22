@@ -19,15 +19,15 @@ def create_book_table():
         json.dump([], file)
 
 
+def list_all_books():
+    with open(books_file, 'r') as file:
+        return json.load(file)
+
+
 def prompt_add_book_to_the_list(name, author):
     books = list_all_books()
     books.append({'name': name, 'author': author, 'read': False})
     _save_all_books(books)
-
-
-def list_all_books():
-    with open(books_file, 'r') as file:
-        return json.load(file)
 
 
 def _save_all_books(books):
